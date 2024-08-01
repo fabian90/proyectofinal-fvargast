@@ -20,7 +20,7 @@ def index():
         return render_template('index.html', error="Error inesperado al cargar la página.")
 
 @heladeria_bp.route('/producto/vender/<int:producto_id>', methods=['POST'])
-@login_required
+# @login_required
 def vender_producto(producto_id):
     try:
         # Llama al método vender_producto del controlador
@@ -42,7 +42,7 @@ def vender_producto(producto_id):
         return jsonify({"message": f"Error inesperado: {str(e)}"}), 500
 
 @heladeria_bp.route('/producto/calorias/<int:producto_id>')
-@login_required
+# @login_required
 def calcular_calorias_producto(producto_id):
     try:
         calorias = heladeria_controller.calcular_calorias_producto(producto_id)
@@ -51,7 +51,7 @@ def calcular_calorias_producto(producto_id):
         return jsonify({'mensaje': f'Error al calcular las calorías del producto: {e}'}), 500
 
 @heladeria_bp.route('/producto/costo/<int:producto_id>')
-@login_required
+# @login_required
 def calcular_costo_produccion(producto_id):
     try:
         costo = heladeria_controller.calcular_costo_produccion(producto_id)
@@ -60,7 +60,7 @@ def calcular_costo_produccion(producto_id):
         return jsonify({'mensaje': f'Error al calcular el costo de producción: {e}'}), 500
 
 @heladeria_bp.route('/producto/rentabilidad/<int:producto_id>')
-@login_required
+# @login_required
 def calcular_rentabilidad_producto(producto_id):
     try:
         rentabilidad = heladeria_controller.calcular_rentabilidad_producto(producto_id)
@@ -69,7 +69,7 @@ def calcular_rentabilidad_producto(producto_id):
         return jsonify({'mensaje': f'Error al calcular la rentabilidad del producto: {e}'}), 500
 
 @heladeria_bp.route('/producto/mas_rentable')
-@login_required
+# @login_required
 def producto_mas_rentable():
     try:
         nombre_producto = heladeria_controller.producto_mas_rentable()
@@ -78,7 +78,7 @@ def producto_mas_rentable():
         return jsonify({'mensaje': f'Error al encontrar el producto más rentable: {e}'}), 500
 
 @heladeria_bp.route('/ingrediente/sano/<int:ingrediente_id>')
-@login_required
+# @login_required
 def es_ingrediente_sano(ingrediente_id):
     try:
         es_sano = heladeria_controller.es_ingrediente_sano(ingrediente_id)
@@ -87,7 +87,7 @@ def es_ingrediente_sano(ingrediente_id):
         return jsonify({'mensaje': f'Error al verificar si el ingrediente es sano: {e}'}), 500
 
 @heladeria_bp.route('/ingrediente/abastecer', methods=['POST'])
-@login_required
+# @login_required
 def abastecer_ingrediente():
     try:
         ingrediente_id = request.form['ingrediente_id']
@@ -100,7 +100,7 @@ def abastecer_ingrediente():
         return jsonify({'mensaje': f'Error al abastecer el ingrediente: {e}'}), 500
 
 @heladeria_bp.route('/ingrediente/renovar', methods=['POST'])
-@login_required
+# @login_required
 def renovar_inventario_complementos():
     try:
         if heladeria_controller.renovar_inventario_complementos():
