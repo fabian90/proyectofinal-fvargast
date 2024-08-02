@@ -3,6 +3,8 @@ from dotenv import load_dotenv
 from db import db
 from flask_restful import Api,Resource
 from flask_login import LoginManager, login_required, login_user
+from flask_migrate import Migrate
+from sqlalchemy import text 
 from models.user import User
 from Router.heladeriaRouter import heladeria_bp
 import os
@@ -20,14 +22,16 @@ if os.path.exists(dotenv_path):
     db_host = os.getenv('DB_HOST')
     db_port = os.getenv('DB_PORT')
     db_name = os.getenv('DB_NAME')
-    print(f"mysql+pymysql://{db_username}:{db_password}@{db_host}:{db_port}/{db_name}")
+    # print(f"mysql+pymysql://{db_username}:{db_password}@{db_host}:{db_port}/{db_name}")
     app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql+pymysql://{db_username}:{db_password}@{db_host}:{db_port}/{db_name}"
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config["SECRET_KEY"] = secret_key   
 # Crear una instancia de SQLAlchemy como Singleton
-
+# print(f"mysql+pymysql://{db_username}:{db_password}@{db_host}:{db_port}/{db_name}")
 api= Api(app)
 db.init_app(app)
+# Configurar Flask-Migrate
+migrate = Migrate(app, db)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login' 
 @login_manager.user_loader
@@ -65,7 +69,16 @@ def login():
             return redirect(url_for('heladeria.index'))
         return render_template('no_autorizado.html')       
     return render_template("login.html")
-
+@app.route('/test-db')
+def test_db():
+    with app.app_context():
+        try:
+            result = db.session.execute(text("SELECT 1")).scalar()
+            return "Conexión a la base de datos exitosa"
+        except Exception as e:
+            return str(e)
 # api.add_resource(Controlador,'/consulta_nombre')
-if __name__ == '__main__':
-    app.run(debug=True)
+if __name__ == "__main__":
+    with app.app_context():
+        db.create_all()
+    app.run()
