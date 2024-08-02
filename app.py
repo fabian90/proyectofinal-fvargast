@@ -10,7 +10,7 @@ import os
 app = Flask(__name__)
 dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
 if os.path.exists(dotenv_path):
-    load_dotenv(dotenv_path)
+    load_dotenv(dotenv_path,override=True)
 
     secret_key = os.urandom(24)
 
@@ -20,8 +20,8 @@ if os.path.exists(dotenv_path):
     db_host = os.getenv('DB_HOST')
     db_port = os.getenv('DB_PORT')
     db_name = os.getenv('DB_NAME')
-
-    app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql://{db_username}:{db_password}@{db_host}:{db_port}/{db_name}"
+    print(f"mysql+pymysql://{db_username}:{db_password}@{db_host}:{db_port}/{db_name}")
+    app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql+pymysql://{db_username}:{db_password}@{db_host}:{db_port}/{db_name}"
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config["SECRET_KEY"] = secret_key   
 # Crear una instancia de SQLAlchemy como Singleton
