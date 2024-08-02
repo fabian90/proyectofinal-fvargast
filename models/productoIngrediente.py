@@ -8,7 +8,7 @@ class ProductoIngrediente(db.Model):
 
 # Métodos getter
 def get_id(self):
-    return self.id
+    return self.id 
 
 def get_id_producto(self):
     return self.id_producto
