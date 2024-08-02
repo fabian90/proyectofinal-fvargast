@@ -1,6 +1,6 @@
 from db import db
 class ProductoIngrediente(db.Model):
-  __tablename__ = "ProductoIngrediente"
+  __tablename__ = "productoingrediente"
 
   id = db.Column(db.Integer, primary_key=True, autoincrement=True)
   id_producto = db.Column(db.Integer, db.ForeignKey('producto.id'), nullable=False)

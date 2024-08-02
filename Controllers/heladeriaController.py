@@ -22,7 +22,6 @@ class HeladeriaController:
                 calorias_totales, es_sano = self.calcular_calorias_producto(producto.id)
                 costo_produccion = self.calcular_costo_produccion(producto.id)
                 rentabilidad = self.calcular_rentabilidad_producto(producto.id)
-
                 productos_info.append({
                     'id': producto.id,
                     'nombre': producto.nombre,
